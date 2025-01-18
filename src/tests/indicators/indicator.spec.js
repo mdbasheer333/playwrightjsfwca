@@ -3,15 +3,17 @@ import { test, expect } from "../baseTest";
 
 /**
  * @typedef {import('../../pages/pageobjects/loginpage').default} LoginPage
+ * @typedef {import('../../pages/pageobjects/addresspage').default} AddressPage
  */
 
-
-test('get started link1', async ({ page, loginPageObject}) => {
+test('add address test', async ({loginPageObject, addressPageObject}) => {
 
         /** @type {LoginPage} */
         const loginPage = loginPageObject;
 
-        console.log(await page.title());
-        await page.waitForTimeout(3000);
+        /** @type {AddressPage} */
+        const addreessPage = addressPageObject;
+        await addreessPage.addTheAddress();
+      
 
 });

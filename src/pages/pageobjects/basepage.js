@@ -1,11 +1,15 @@
-export default class BasePage{
+/**
+ * @typedef {import('@playwright/test').Page} Page
+ */
 
-       /**
-        * @param {Page} page
-        */
-    
-        constructor(page) {
-            this.page = page;
-        }
-    
+export default class BasePage {
+
+    /**
+     * @param {Page} page
+     */
+
+    constructor(page) {
+        this.page = page;
+    }
+
 }

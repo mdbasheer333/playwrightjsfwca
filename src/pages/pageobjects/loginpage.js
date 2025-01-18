@@ -6,12 +6,12 @@ import LoginPageLocators from '../locators/loginpagelocators';
 import BasePage from './basepage';
 
 
-export default class LoginPage extends BasePage{
+export default class LoginPage extends BasePage {
 
-    constructor(page){
+    constructor(page) {
         super(page);
     }
- 
+
     async login(userid, password) {
         await this.page.locator(LoginPageLocators.MY_ACCOUNT_LINK).click();
         await this.page.locator(LoginPageLocators.EMAIL_INPUT).fill(userid);

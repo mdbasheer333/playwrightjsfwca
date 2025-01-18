@@ -2,6 +2,7 @@ import { test as base, expect } from '@playwright/test';
 import crypto from 'crypto';
 import { secretKey, ivHex } from "../utils/passwordencrypt";
 import LoginPage from '../pages/pageobjects/loginpage';
+import AddressPage from "../pages/pageobjects/addresspage";
 
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
@@ -19,6 +20,8 @@ const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey, '
 let decrypted = decipher.update(process.env.SECRET_KEY, 'hex', 'utf8');
 decrypted += decipher.final('utf8');
 
+const envVars = { ...process.env };
+
 const test = base.extend({
 
     page: async ({ page }, use) => {
@@ -26,26 +29,22 @@ const test = base.extend({
         await use(page);
     },
 
-    loginPageObject: async ({ page }, use) => {
-        const loginPageObject = new LoginPage(page);
-        await use(loginPageObject);
+    envConfigData: async ({ }, use) => {
+        await use(envVars);
     },
 
-    user_id: process.env.USER_ID,
-    password: decrypted
+    loginPageObject: async ({ page }, use) => {
+        const loginPageObject = new LoginPage(page);
+        await loginPageObject.login(process.env.USER_ID, decrypted);
+        await use(loginPageObject);
+        await loginPageObject.logout();
+    },
 
-});
+    addressPageObject: async ({ page }, use) => {
+        const addressPageObject = new AddressPage(page);
+        await use(addressPageObject);
+    }
 
-test.beforeEach(async ({ loginPageObject, user_id, password }) => {
-    /** @type {LoginPage} */
-    const loginPage = loginPageObject;
-    await loginPage.login(user_id, password);
-});
-
-test.afterEach(async ({ loginPageObject }) => {
-    /** @type {LoginPage} */
-    const loginPage = loginPageObject;
-    await loginPage.logout();
 });
 
 export { test, expect };

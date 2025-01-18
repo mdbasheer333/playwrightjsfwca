@@ -6,12 +6,10 @@ import { test, expect } from "../tests/baseTest";
  */
 
 
-test('get started link2', async ({ page, loginPageObject, user_id, password }) => {
+test('login and check the home page title', async ({ page, loginPageObject, envConfigData }) => {
 
         /** @type {LoginPage} */
-        const loginPage = loginPageObject;
-        
-        console.log(await page.title());
-        await page.waitForTimeout(3000);
+        const loginPage = loginPageObject;       
+        expect(await page.title()).toBe('My Accounts');
 
 });
