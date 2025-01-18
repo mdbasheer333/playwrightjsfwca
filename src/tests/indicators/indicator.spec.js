@@ -6,14 +6,14 @@ import { test, expect } from "../baseTest";
  * @typedef {import('../../pages/pageobjects/addresspage').default} AddressPage
  */
 
-test('add address test', async ({loginPageObject, addressPageObject}) => {
+test('add address test', async ({loginPageObject, addressPageObject, testData}) => {
 
         /** @type {LoginPage} */
         const loginPage = loginPageObject;
 
         /** @type {AddressPage} */
         const addreessPage = addressPageObject;
-        await addreessPage.addTheAddress();
+        await addreessPage.addTheAddress(testData["input2"]);
       
 
 });

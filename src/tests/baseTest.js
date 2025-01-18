@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { secretKey, ivHex } from "../utils/passwordencrypt";
 import LoginPage from '../pages/pageobjects/loginpage';
 import AddressPage from "../pages/pageobjects/addresspage";
+import createJsonObjectFromFolder from '../utils/testdataloader'
 
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
@@ -24,13 +25,18 @@ const envVars = { ...process.env };
 
 const test = base.extend({
 
+    
     page: async ({ page }, use) => {
-        await page.goto(process.env.APP_URL);
+        await page.goto(process.env.APP_URL);        
         await use(page);
     },
 
-    envConfigData: async ({ }, use) => {
+    envConfigData: async ({ }, use) => {        
         await use(envVars);
+    },
+
+    testData: async ({}, use, testInfo) => {                        
+        await use(await createJsonObjectFromFolder('./src/data'));
     },
 
     loginPageObject: async ({ page }, use) => {
