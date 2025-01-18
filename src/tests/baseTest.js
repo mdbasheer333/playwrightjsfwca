@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import  crypto  from 'crypto';
+import crypto from 'crypto';
 import { secretKey, ivHex } from "../utils/passwordencrypt";
 import LoginPage from '../pages/pageobjects/loginpage';
 
@@ -34,6 +34,18 @@ const test = base.extend({
     user_id: process.env.USER_ID,
     password: decrypted
 
+});
+
+test.beforeEach(async ({ loginPageObject, user_id, password }) => {
+    /** @type {LoginPage} */
+    const loginPage = loginPageObject;
+    await loginPage.login(user_id, password);
+});
+
+test.afterEach(async ({ loginPageObject }) => {
+    /** @type {LoginPage} */
+    const loginPage = loginPageObject;
+    await loginPage.logout();
 });
 
 export { test, expect };
