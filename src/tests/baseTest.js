@@ -5,6 +5,9 @@ import LoginPage from '../pages/pageobjects/loginpage';
 import AddressPage from "../pages/pageobjects/addresspage";
 import createJsonObjectFromFolder from '../utils/testdataloader'
 
+import * as allure from "allure-js-commons";
+import { ContentType } from "allure-js-commons";
+
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
@@ -25,15 +28,22 @@ const envVars = { ...process.env };
 
 const test = base.extend({
 
-
     page: async ({ page }, use, testInfo) => {
         await page.goto(process.env.APP_URL);
         await use(page);
+        
         if (testInfo.status == 'failed') {
+            let screenshotPath = './test-results/' + testInfo.title + '_failed_screenshot.png';
+            console.log('screenshot path is ' + screenshotPath);
+            let screenshot = await page.screenshot({ path: screenshotPath, fullPage: false });
             await test.info().attach('screenshot', {
-                body: await page.screenshot(),
+                body: screenshot,
                 contentType: 'image/png',
             });
+            // await allure.attachmentPath("screenshot", screenshotPath, {
+            //     contentType: ContentType.PNG,
+            //     fileExtension: "png",
+            // });
         }
     },
 
