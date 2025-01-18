@@ -25,18 +25,25 @@ const envVars = { ...process.env };
 
 const test = base.extend({
 
-    
-    page: async ({ page }, use) => {
-        await page.goto(process.env.APP_URL);        
+
+    page: async ({ page }, use, testInfo) => {
+        await page.goto(process.env.APP_URL);
         await use(page);
+        if (testInfo.status == 'failed') {
+            await test.info().attach('screenshot', {
+                body: await page.screenshot(),
+                contentType: 'image/png',
+            });
+        }
     },
 
-    envConfigData: async ({ }, use) => {        
+    envConfigData: async ({ }, use) => {
         await use(envVars);
     },
 
-    testData: async ({}, use, testInfo) => {                        
-        await use(await createJsonObjectFromFolder('./src/data'));
+    testData: async ({ }, use, testInfo) => {
+        let tData = await createJsonObjectFromFolder('./src/data')
+        await use(tData);
     },
 
     loginPageObject: async ({ page }, use) => {
