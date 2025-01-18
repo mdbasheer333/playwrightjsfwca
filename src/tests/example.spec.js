@@ -6,12 +6,12 @@ import { test, expect } from "../tests/baseTest";
  */
 
 
-test('get started link', async ({ page, loginPageObject }) => {
+test('get started link', async ({ page, loginPageObject , user_id, password}) => {
 
         /** @type {LoginPage} */
         const loginPage = loginPageObject;
 
-        await loginPage.login();
+        await loginPage.login(user_id, password);
         console.log(await page.title());
         await page.waitForTimeout(3000);
         await loginPage.logout();

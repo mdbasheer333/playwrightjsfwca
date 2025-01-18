@@ -15,10 +15,10 @@ export default class LoginPage {
         this.page = page;
     }
 
-    async login() {
+    async login(userid, password) {
         await this.page.locator(LoginPageLocators.MY_ACCOUNT_LINK).click();
-        await this.page.locator(LoginPageLocators.EMAIL_INPUT).fill('mdbasheer333@gmail.com');
-        await this.page.locator(LoginPageLocators.PASSWORD_INPUT).fill('mdbasheer333');
+        await this.page.locator(LoginPageLocators.EMAIL_INPUT).fill(userid);
+        await this.page.locator(LoginPageLocators.PASSWORD_INPUT).fill(password);
         await this.page.locator(LoginPageLocators.LOGIN_BUTTON).click();
     }
 
