@@ -6,7 +6,7 @@ import { test, expect } from "../baseTest";
  */
 
 
-test('get started link', async ({ page, loginPageObject}) => {
+test('get started link1', async ({ page, loginPageObject}) => {
 
         /** @type {LoginPage} */
         const loginPage = loginPageObject;
