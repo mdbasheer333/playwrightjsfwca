@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { secretKey, ivHex } from "../utils/passwordencrypt";
 import LoginPage from '../pages/pageobjects/loginpage';
 import AddressPage from "../pages/pageobjects/addresspage";
-import createJsonObjectFromFolder from '../utils/testdataloader'
+import { createJsonObjectFromFolder, createCsvDataFromFolder, createExcelDataFromFolder } from '../utils/testdataloader'
 
 import * as allure from "allure-js-commons";
 import { ContentType } from "allure-js-commons";
@@ -31,7 +31,6 @@ const test = base.extend({
     page: async ({ page }, use, testInfo) => {
         await page.goto(process.env.APP_URL);
         await use(page);
-        
         if (testInfo.status == 'failed') {
             let screenshotPath = './test-results/' + testInfo.title + '_failed_screenshot.png';
             console.log('screenshot path is ' + screenshotPath);
@@ -40,10 +39,6 @@ const test = base.extend({
                 body: screenshot,
                 contentType: 'image/png',
             });
-            // await allure.attachmentPath("screenshot", screenshotPath, {
-            //     contentType: ContentType.PNG,
-            //     fileExtension: "png",
-            // });
         }
     },
 
@@ -51,9 +46,19 @@ const test = base.extend({
         await use(envVars);
     },
 
-    testData: async ({ }, use, testInfo) => {
-        let tData = await createJsonObjectFromFolder('./src/data')
+    testData: async ({ }, use) => {
+        let tData = await createJsonObjectFromFolder('./src/data/json')
         await use(tData);
+    },
+
+    testCsvData: async ({ }, use) => {
+        let tCsvData = await createCsvDataFromFolder('./src/data/csv')
+        await use(tCsvData);
+    },
+
+    testExlData: async ({ }, use) => {
+        let tExlData = await createExcelDataFromFolder('./src/data/excel')
+        await use(tExlData);
     },
 
     loginPageObject: async ({ page }, use) => {
