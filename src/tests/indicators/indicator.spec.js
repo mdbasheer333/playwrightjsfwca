@@ -6,7 +6,7 @@ import { test, expect } from "../baseTest";
  * @typedef {import('../../pages/pageobjects/addresspage').default} AddressPage
  */
 
-test('add address test',{tag:['@sanity']}, async ({loginPageObject, addressPageObject, testData}) => {
+test('add address test',{tag:['@sanity']}, async ({loginPageObject, addressPageObject, testData, testCsvData}) => {
 
         /** @type {LoginPage} */
         const loginPage = loginPageObject;
