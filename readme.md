@@ -35,3 +35,21 @@ to genarate encrypted password:
 
    makesure to comment back 33 & 34
    
+
+========================================================
+
+	playwright.config.ts:
+
+ 	timeout: 0,   ---> max time for test to complete with in, if 0 means infinite
+  	globalTimeout: 0, --> max time for test suite to complete with in, if 0 means infinite
+
+   actionTimeout: 60000*2, --> for every action like click/check..etc max time it will set
+   navigationTimeout: 60000*2, -> navigation time like goto/back/farward...etc
+
+   //test files level
+   page.waitForTimeout(3000) --> hard codeded wait, not recommended
+   page.setDefaultTimeout(30000) --> This setting will change the default maximum time for all the methods accepting actionTimeout option in config file.
+
+   test.setTimeout(12000) --> Changes the timeout for the test. Zero means no timeout. it is overrin the timeout in config file
+   
+   page.locator('[name=abc]').click({timeout:15000}) --> applicable to only this click,
