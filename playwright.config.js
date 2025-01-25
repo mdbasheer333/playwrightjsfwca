@@ -26,8 +26,8 @@ export default defineConfig({
   globalTimeout: 0,
 
   use: {
-    actionTimeout: 90000,
-    navigationTimeout: 90000,
+    actionTimeout: 60000*2,
+    navigationTimeout: 60000*2,
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
